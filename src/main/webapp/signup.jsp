@@ -18,8 +18,8 @@
 <div class="container">
 
 <img alt="" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUYLbC5wBUKqdrluQP3nGTs_aJuiisFjCbF06O2b-tdg06w15Nj4ro9T-9XrrtUlV2F7o&usqp=CAU">
-
-<form action="auth" method="post">
+<h1>Signup Page!</h1>
+<form action="signup" method="post">
 
  <div style="width: 40%;">
  <div class="form-group">
@@ -31,13 +31,29 @@
      <label>Password</label>
      <input type="password" name="password" class="form-control">
 </div>
+
+<div class="form-group">
+     <label>Email</label>
+     <input type="email" name="email" class="form-control">
+</div>
+
+<div class="form-group">
+     <label>Gender</label>
+     <select name="gender" class="form-control">
+         <option>Male</option>
+         <option>Female</option>
+     </select>
+</div>
+
+
 <div class="form-group">
  <br/>
-<button type="submit" class="btn btn-primary">Login</button> 
+<button type="submit" class="btn btn-primary">Signup</button> 
 <button type="reset" class="btn btn-danger">Reset</button>
-<a href="signup">
-<button type="button" class="btn btn-success">Signup</button>
+<a href="auth">
+<button type="button" class="btn btn-warning">Login</button>
 </a>
+
 </div>
 </div>
 <hr/>
