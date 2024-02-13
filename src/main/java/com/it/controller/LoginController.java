@@ -1,6 +1,7 @@
 package com.it.controller;
 
 import java.util.Comparator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.it.repository.Signup;
+import com.it.repository.SignupRespository;
 import com.it.service.AuthService;
 
 @Controller
@@ -17,6 +20,9 @@ public class LoginController {
 	
 	@Autowired
 	private AuthService authService;
+	
+	@Autowired
+	private SignupRespository signupRespository;
 	
 	@GetMapping("/greet")
 	public String showPage() {
@@ -36,6 +42,9 @@ public class LoginController {
 		String password=req.getParameter("password");
 		if(authService.validateUser(username, password)) {
 			req.setAttribute("message","Welcome mr. "+username);
+			List<Signup> signups=signupRespository.findAll();
+			req.setAttribute("signups", signups);
+			//Fetch data from data
 			return "home";
 		}
 		req.setAttribute("message","I am sorry your username and password are not correct!");

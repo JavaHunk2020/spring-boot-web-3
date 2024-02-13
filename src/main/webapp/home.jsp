@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +33,31 @@
  <a href="signup">
 <button type="button" class="btn btn-success">Signup</button>
 </a>
+
+<hr/>
+<h3 style="background-color: yellow;">SignUp List:</h3>            
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Record Date</th>
+      </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="item" items="${signups}">
+      <tr>
+        <td>${item.username}</td>
+        <td>${item.password}</td>
+        <td>${item.email}</td>
+        <td>${item.gender}</td>
+        <td>${item.timestamp}</td>
+      </tr>
+      </c:forEach>
+    </tbody>
+  </table>
  
 </div>
 
