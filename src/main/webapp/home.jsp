@@ -37,13 +37,14 @@
 <hr/>
 <h3 style="background-color: yellow;">SignUp List:</h3>            
   <table class="table table-bordered">
-    <thead>
+    <thead style="background-color: pink;">
       <tr>
         <th>Username</th>
         <th>Password</th>
         <th>Email</th>
         <th>Gender</th>
         <th>Record Date</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -54,6 +55,16 @@
         <td>${item.email}</td>
         <td>${item.gender}</td>
         <td>${item.timestamp}</td>
+        <td>
+          <a href="deleteSignup?upname=${item.username}">
+               <button type="button" class="btn btn-danger">Delete</button>
+            </a>
+             <a href="editSignup?upname=${item.username}">
+               <button type="button" class="btn btn-primary">Edit</button>
+            </a>
+            
+            
+        </td>
       </tr>
       </c:forEach>
     </tbody>
