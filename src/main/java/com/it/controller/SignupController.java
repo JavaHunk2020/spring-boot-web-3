@@ -1,6 +1,8 @@
 package com.it.controller;
 
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +44,50 @@ public class SignupController {
   		return "esignup";
   	}
     
+    
+	@GetMapping("/searchSignup")
+	public String searchtSignupData(@RequestParam String searchText, Model model) {
+		List<Signup> signups = signupRespository.findByUsernameOrEmail(searchText,searchText);
+		model.addAttribute("signups", signups);
+		// Fetch data from data
+		return "home";
+	}
+	
+    /*@GetMapping("/sortByEmail")
+	public String sortByEmailAndShow(@RequestParam String sort, Model model) {
+    	List<Signup> signups=signupRespository.findAll();
+    	if("asc".equalsIgnoreCase(sort)) {
+    		Collections.sort(signups , (o1,o2)->o1.getEmail().compareTo(o2.getEmail()));
+    	}else {
+    		Collections.sort(signups , (o1,o2)->o2.getEmail().compareTo(o1.getEmail()));
+    	}
+    	model.addAttribute("signups", signups);
+		//Fetch data from data
+		return "home";
+	}*/
+    
+    @GetMapping("/sortByEmail")
+	public String sortByEmailAndShow(@RequestParam String sort, Model model) {
+    	List<Signup> signups=signupRespository.findAll();
+    	if("asc".equalsIgnoreCase(sort)) {
+    		Collections.sort(signups , new Comparator<Signup>() {
+				@Override
+				public int compare(Signup o1, Signup o2) {
+					return o1.getEmail().compareTo(o2.getEmail());
+				}
+			});
+    	}else {
+    		Collections.sort(signups , new Comparator<Signup>() {
+				@Override
+				public int compare(Signup o1, Signup o2) {
+					return o2.getEmail().compareTo(o2.getEmail());
+				}
+			});
+    	}
+    	model.addAttribute("signups", signups);
+		//Fetch data from data
+		return "home";
+	}
 			
 	@GetMapping({"/signup","/","aha"})
 	public String showLoginPage() {
@@ -67,6 +113,22 @@ public class SignupController {
 		signupRespository.save(signup);
 		model.addAttribute("message","You have done signup successfully!");
 		return "jadoo/login"; //  /welcome.jsp
+	}
+	
+	@PostMapping("/usignup")
+	public String upostSigup(@ModelAttribute Signup signup, Model model) {
+		
+		Signup dbsignup=signupRespository.findById(signup.getUsername()).get();
+		dbsignup.setEmail(signup.getEmail());
+		dbsignup.setGender(signup.getGender());
+		dbsignup.setPassword(signup.getPassword());
+		signupRespository.save(dbsignup);
+		model.addAttribute("message","You have updated signup successfully!");
+		//Fetch remaining data from data
+    	List<Signup> signups=signupRespository.findAll();
+    	model.addAttribute("signups", signups);
+		//Fetch data from data
+		return "home";
 	}
 
 }

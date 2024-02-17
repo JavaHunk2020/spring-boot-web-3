@@ -33,6 +33,13 @@
  <a href="signup">
 <button type="button" class="btn btn-success">Signup</button>
 </a>
+<br/><br/>
+<div >
+     <form action="searchSignup">
+    <input type="text" class="form-control" name="searchText" style="display: inline;width: 40%"/>
+    <button type="submit" class="btn btn-primary" style="display: inline;">Go</button>
+    </form>
+</div>
 
 <hr/>
 <h3 style="background-color: yellow;">SignUp List:</h3>            
@@ -41,7 +48,18 @@
       <tr>
         <th>Username</th>
         <th>Password</th>
-        <th>Email</th>
+        <th>
+        Email
+         <span style="float: right;">
+         <a href="sortByEmail?sort=asc">  
+            <img alt="" src="up.png" height="25px"/>
+         </a>
+           &nbsp;
+           <a href="sortByEmail?sort=desc">
+         <img alt="" src="down.png" height="25px"/>
+         </a>
+         </span>
+        </th>
         <th>Gender</th>
         <th>Record Date</th>
         <th>Action</th>

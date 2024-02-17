@@ -19,12 +19,14 @@
 
 <img alt="" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUYLbC5wBUKqdrluQP3nGTs_aJuiisFjCbF06O2b-tdg06w15Nj4ro9T-9XrrtUlV2F7o&usqp=CAU">
 <h1>Update Signup Page!</h1>
-<form action="signup" method="post">
+<form action="usignup" method="post">
 
  <div style="width: 40%;">
  <div class="form-group">
      <label>Username</label>
      <input disabled="disabled" type="text" value="${dsignup.username}" name="username" class="form-control">
+     <input type="hidden" value="${dsignup.username}" name="username" class="form-control">
+     
 </div>
 
 <div class="form-group">
