@@ -108,10 +108,15 @@ public class SignupController {
 		signup.setGender(gender);
 		signup.setPassword(password);
 		signup.setUsername(username);*/
-		
 		signup.setTimestamp(new Date());
-		signupRespository.save(signup);
-		model.addAttribute("message","You have done signup successfully!");
+		Optional<Signup> optional=signupRespository.findById(signup.getUsername());
+		if(optional.isPresent()) {
+			model.addAttribute("message","Username aleady exists in system!");
+			return "signup";
+		}else {
+			signupRespository.save(signup);
+			model.addAttribute("message","You have done signup successfully!");
+		}
 		return "jadoo/login"; //  /welcome.jsp
 	}
 	
