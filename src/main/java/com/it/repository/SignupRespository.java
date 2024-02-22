@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.it.repository.entity.Signup;
+
 public interface SignupRespository extends JpaRepository<Signup, String> {
 	
 	public Optional<Signup> findByUsernameAndPassword(String username,String password);
@@ -14,3 +16,4 @@ public interface SignupRespository extends JpaRepository<Signup, String> {
 	List<Signup> findByUsernameOrEmail(String username,String email);
 
 }
+	

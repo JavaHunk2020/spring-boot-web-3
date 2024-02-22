@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.it.repository.Signup;
 import com.it.repository.SignupRespository;
+import com.it.repository.entity.Signup;
 
 @Controller
 public class SignupController {

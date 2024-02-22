@@ -1,4 +1,4 @@
-package com.it.repository;
+package com.it.repository.entity;
 
 
 import java.util.Date;

@@ -1,6 +1,5 @@
 package com.it.controller;
 
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.it.repository.Signup;
 import com.it.repository.SignupRespository;
+import com.it.repository.entity.Signup;
 import com.it.service.AuthService;
 
 @Controller

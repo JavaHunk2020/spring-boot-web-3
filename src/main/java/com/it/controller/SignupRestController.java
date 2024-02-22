@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.it.repository.Signup;
 import com.it.repository.SignupRespository;
+import com.it.repository.entity.Signup;
 
 @RestController
 @RequestMapping("/api")
