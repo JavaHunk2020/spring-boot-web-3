@@ -25,9 +25,7 @@ public class SSNController {
 	
 	@PostMapping("/ssns")
 	public Map<String,Object> createSsn(@RequestBody SsnDTO ssnDTO){
-		 
 		 ssnDTO.setDoe(new Timestamp(new Date().getTime()));
-		 
 		 ssnService.save(ssnDTO);
 		 return Map.of("code",200,"message","Ssn record is created successfully");
 	}

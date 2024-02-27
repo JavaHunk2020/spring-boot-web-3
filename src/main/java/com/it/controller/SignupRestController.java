@@ -1,10 +1,15 @@
 package com.it.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.it.repository.SignupRespository;
 import com.it.repository.entity.Signup;
+import com.it.spring.security.JwtUtils;
 
 @RestController
 @RequestMapping("/api")
@@ -22,6 +28,25 @@ public class SignupRestController {
 	
 	@Autowired
 	private SignupRespository signupRespository;
+
+	@Autowired
+	AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
+	
+	
+	@PostMapping("/cauth")
+	public Map<String,Object>  postLogin(@RequestBody SignupDTO signupRequest) {
+		//authentication has two things - username and role
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(signupRequest.getEmail(), signupRequest.getPassword()));
+		String jwt = jwtUtils.generateJwtToken(authentication);
+		Map<String,Object> jwtReponse = new HashMap<>();
+		jwtReponse.put("Authorization", jwt);
+		return jwtReponse;
+	}
+	
 	
 //	/http://localhost:8080/api/signups/jack500
 //	/http://localhost:8080/api/signups/admin12
