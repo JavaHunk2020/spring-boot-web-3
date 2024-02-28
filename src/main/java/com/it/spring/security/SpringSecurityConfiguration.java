@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -37,8 +36,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder.userDetailsService(userDetailsService)
-		 .passwordEncoder(passwordEncoder());
+		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -54,11 +52,10 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().exceptionHandling().
-		authenticationEntryPoint(unauthorizedHandler).and()
+		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-				.authorizeRequests().antMatchers("/api/cauth/**","/api/signups/**")
-				.permitAll().anyRequest().authenticated();
+				.authorizeRequests().antMatchers("/api/cauth/**").permitAll().anyRequest()
+				.authenticated();
 	}
 }

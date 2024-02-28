@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,9 +42,12 @@ public class SignupRestController {
 		//authentication has two things - username and role
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(signupRequest.getEmail(), signupRequest.getPassword()));
+		//it will come here only when username and password are correct!!
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		Map<String,Object> jwtReponse = new HashMap<>();
 		jwtReponse.put("Authorization", jwt);
+		jwtReponse.put("email", signupRequest.getEmail());
+		jwtReponse.put("title", "Manager");
 		return jwtReponse;
 	}
 	
@@ -51,6 +55,7 @@ public class SignupRestController {
 //	/http://localhost:8080/api/signups/jack500
 //	/http://localhost:8080/api/signups/admin12
 	@DeleteMapping("/signups/{username}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	//@PathVariable it is used to read data from URI
 	public MessageDTO deleteSignups(@PathVariable String username) {
 		signupRespository.deleteById(username);
@@ -67,6 +72,7 @@ public class SignupRestController {
 		return signups;
 	}
     
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/signups")
 	public MessageDTO postSigup(@RequestBody Signup signup) {
 		signup.setTimestamp(new Date());

@@ -30,8 +30,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if ("jack@gmail.com".equals(username)) {
 			List<GrantedAuthority> authorities = new ArrayList<>();
 			authorities.add(new SimpleGrantedAuthority("ADMIN"));
+			//username ,password ,role
 			return new User(username,passwordEncoder.encode("jill"),authorities);
-		} else {
+		} else if ("nagen@gmail.com".equals(username)) {
+			List<GrantedAuthority> authorities = new ArrayList<>();
+			authorities.add(new SimpleGrantedAuthority("CUSTOMER"));
+			//username ,password ,role
+			return new User(username,passwordEncoder.encode("jill"),authorities);
+		}else {
 			throw new UsernameNotFoundException("User Not Found with username: " + username);
 		}
 		// return UserDetailsImpl.build(signup);
