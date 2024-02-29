@@ -3,6 +3,7 @@ package com.it.repository.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,6 +18,16 @@ public class Signup {
 	private String email;
 	private String gender;
 	private Date timestamp;
+	@Column(columnDefinition="varchar(30) default 'CUSTOMER'")
+	private String role;
+	
+
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public String getUsername() {
 		return username;
 	}

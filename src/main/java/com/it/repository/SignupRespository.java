@@ -14,6 +14,7 @@ public interface SignupRespository extends JpaRepository<Signup, String> {
 	
 	@Query("Select c from Signup c where c.username LIKE  %?1% or c.email LIKE  %?2%")
 	List<Signup> findByUsernameOrEmail(String username,String email);
-
+	
+	Optional<Signup> findByEmail(String email);
 }
 	

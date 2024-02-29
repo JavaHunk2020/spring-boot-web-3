@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,9 @@ public class SignupRestController {
 	
 	@Autowired
 	private JwtUtils jwtUtils;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	
 	@PostMapping("/cauth")
@@ -82,6 +86,7 @@ public class SignupRestController {
 			messageDTO.setMessage("Username aleady exists in system!");
 			messageDTO.setCode(233);
 		}else {
+			signup.setPassword(passwordEncoder.encode(signup.getPassword()));
 			signupRespository.save(signup);
 			messageDTO.setMessage("You have done signup successfully!");
 			messageDTO.setCode(200);

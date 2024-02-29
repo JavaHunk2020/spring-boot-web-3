@@ -45,7 +45,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         List<GrantedAuthority> authorities = Stream.of(role)
                 .map(r -> new SimpleGrantedAuthority(r))
                 .collect(Collectors.toList());
-
+        
+        //if we are able to create this object  - it means 
+        //user is authenticate
         UsernamePasswordAuthenticationToken authentication =
             new UsernamePasswordAuthenticationToken(
                 userDetails,
@@ -53,7 +55,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 authorities);
 
         //authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
+         //SecutiryContextHolder
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     } catch (Exception e) {

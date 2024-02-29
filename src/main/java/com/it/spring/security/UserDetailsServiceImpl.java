@@ -3,6 +3,8 @@ package com.it.spring.security;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.it.repository.SignupRespository;
+import com.it.repository.entity.Signup;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -24,23 +29,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 */
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private SignupRespository signupRespository;
+
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		if ("jack@gmail.com".equals(username)) {
-			List<GrantedAuthority> authorities = new ArrayList<>();
-			authorities.add(new SimpleGrantedAuthority("ADMIN"));
-			//username ,password ,role
-			return new User(username,passwordEncoder.encode("jill"),authorities);
-		} else if ("nagen@gmail.com".equals(username)) {
-			List<GrantedAuthority> authorities = new ArrayList<>();
-			authorities.add(new SimpleGrantedAuthority("CUSTOMER"));
-			//username ,password ,role
-			return new User(username,passwordEncoder.encode("jill"),authorities);
-		}else {
-			throw new UsernameNotFoundException("User Not Found with username: " + username);
+		
+		if ("jack@gmail.com".equals(username)) { 
+			List<GrantedAuthority> authorities =
+				   new ArrayList<>(); authorities.add(new SimpleGrantedAuthority("ADMIN"));
+				   //username ,password ,role return new
+				   return new User(username,passwordEncoder.encode("jill"),authorities); 
 		}
-		// return UserDetailsImpl.build(signup);
+		
+		Optional<Signup> optional=signupRespository.findByEmail(username);
+		if(optional.isPresent()) {
+			List<GrantedAuthority> authorities = new ArrayList<>();
+			authorities.add(new SimpleGrantedAuthority(optional.get().getRole()));
+			return new User(username,optional.get().getPassword(),authorities);
+		}
+		throw new UsernameNotFoundException("User Not Found with username: " + username);
 	}
 
 }
