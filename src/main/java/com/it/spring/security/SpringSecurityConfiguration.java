@@ -55,7 +55,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-				.authorizeRequests().antMatchers("/api/cauth/**").permitAll().anyRequest()
+				.authorizeRequests().antMatchers("/api/cauth/**","/api/signups/**").permitAll().anyRequest()
 				.authenticated();
 	}
 }
