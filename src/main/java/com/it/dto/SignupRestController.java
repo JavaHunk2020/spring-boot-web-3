@@ -1,4 +1,4 @@
-package com.it.controller;
+package com.it.dto;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.it.repository.SignupRespository;
 import com.it.repository.entity.Signup;
+import com.it.service.KafkaSenderService;
 import com.it.spring.security.JwtUtils;
 
 @RestController
@@ -42,6 +43,8 @@ public class SignupRestController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private KafkaSenderService kafkaSenderService;
 	
 	@PostMapping("/cauth")
 	public Map<String,Object>  postLogin(@RequestBody SignupDTO signupRequest) {
@@ -92,8 +95,8 @@ public class SignupRestController {
 			signupRespository.save(signup);
 			messageDTO.setMessage("You have done signup successfully!");
 			messageDTO.setCode(200);
+			kafkaSenderService.sendMessage(signup);
 		}
-		
 		return messageDTO;
     }	
 }

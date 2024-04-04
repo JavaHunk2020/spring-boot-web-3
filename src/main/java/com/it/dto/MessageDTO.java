@@ -1,4 +1,4 @@
-package com.it.controller;
+package com.it.dto;
 
 public class MessageDTO {
 	
